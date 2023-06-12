@@ -8,6 +8,9 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 
 const Login = () => {
@@ -16,6 +19,10 @@ const Login = () => {
     const captchaRef = useRef(null);
     // for disabling the login button
     const [disabled, setDisabled] = useState(true);
+
+
+    // to use [functions] from AuthContext
+    const { signIn } = useContext(AuthContext);
 
     // for loading captcha
     useEffect(() => {
@@ -29,6 +36,13 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+
+        // call the signIn function
+        signIn()
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
     }
 
     // captcha validation operation
@@ -87,6 +101,7 @@ const Login = () => {
                                 <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </div>
+                        <p className="text-center text-[#D1A054] my-2"><small>New to Bistro Boss? <Link to="/signup" className="font-bold">Create an account</Link></small></p>
                     </form>
                 </div>
             </div>

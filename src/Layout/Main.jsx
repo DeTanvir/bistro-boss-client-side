@@ -6,7 +6,11 @@ const Main = () => {
     // to remove navbar and footer from login page, we need location
     const location = useLocation();
     // for the logic of conditional rendering
-    const noHeaderFooter = location.pathname.includes('login');
+    // const noHeaderFooter = location.pathname.includes('login' || 'signup'); //this won't work
+    // this will work
+    const noHeaderFooter = location.pathname.includes('login') || location.pathname.includes('signup') ;
+
+    
     return (
         <div>
             {noHeaderFooter || <NavBar></NavBar>}
