@@ -14,6 +14,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 
 const Login = () => {
@@ -25,7 +26,7 @@ const Login = () => {
     const [disabled, setDisabled] = useState(true);
 
 
-    // to use [functions] from AuthContext
+    // to use [signIn-functions] from AuthContext
     const { signIn, googleSignIn } = useContext(AuthContext);
 
     // // for location
@@ -71,19 +72,19 @@ const Login = () => {
             .catch(error => console.log(error))
     }
 
-    // google signIn
-    const handleGoogleSignIn = () => {
-        googleSignIn()
-            .then(result => {
-                const loggedInUser = result.user;
-                console.log(loggedInUser);
-                // to navigate to the home route
-                navigate(from, { replace: true });
-            })
-            .catch(error => {
-                console.log('error', error.message)
-            })
-    }
+    // // google signIn
+    // const handleGoogleSignIn = () => {
+    //     googleSignIn()
+    //         .then(result => {
+    //             const loggedInUser = result.user;
+    //             console.log(loggedInUser);
+    //             // to navigate to the home route
+    //             navigate(from, { replace: true });
+    //         })
+    //         .catch(error => {
+    //             console.log('error', error.message)
+    //         })
+    // }
 
     // captcha validation operation
     const handleValidateCaptcha = (e) => {
@@ -137,15 +138,17 @@ const Login = () => {
                                 {/* captcha validation button */}
                                 {/* <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button> */}
                             </div>
+
+                            {/* social login */}
                             <div className="form-control mt-6">
-                                <button onClick={handleGoogleSignIn} className='w-full mb-2 btn btn-primary bg-orange-400'>
-                                    <FaGoogle className="text-orange-900 me-2"></FaGoogle> Signin with Google
-                                </button>
+                                <SocialLogin></SocialLogin>
                             </div>
+
+
                             {/* TODO: make button disabled for captcha */}
                             <div className="form-control mt-6">
-                                {/* <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" /> */}
-                                <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
+                                <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
+                                {/* <input disabled={false} className="btn btn-primary" type="submit" value="Login" /> */}
                             </div>
                         </div>
                         <p className="text-center text-[#D1A054] my-2"><small>New to Bistro Boss? <Link to="/signup" className="font-bold">Create an account</Link></small></p>

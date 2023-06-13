@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
 
@@ -33,22 +34,40 @@ const SignUp = () => {
                 // [update-user-photo] function to update photo
                 updateUserProfile(data.name, data.photo)
                     .then(() => {
-                        console.log('User Profile info updated');
+
+                        // [variable] for sending data by [post-method]
+                        const saveUser = {name: data.name, email: data.email};
+
+                        // for posting [user] to DB
+                        fetch('https://bistro-boss-server-ten-swart.vercel.app/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(saveUser)
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if(data.insertedId) {
+
+                                // [reset():form] and [sweetAlert] only after user posted to DB
+                                // to reset the form
+                                reset();
+                                // for [sweet-alert] on signUp
+                                Swal.fire({
+                                    title: 'User created successfully',
+                                    showClass: {
+                                        popup: 'animate__animated animate__fadeInDown'
+                                    },
+                                    hideClass: {
+                                        popup: 'animate__animated animate__fadeOutUp'
+                                    }
+                                })
+                            }
+                        })
                     })
                     .catch(err => console.log(err))
 
-                // to reset the form
-                reset();
-                // for [sweet-alert] on signUp
-                Swal.fire({
-                    title: 'User created successfully',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
-                })
             })
             // to navigate [home('/)] after signUp
             navigate('/');
@@ -118,6 +137,10 @@ const SignUp = () => {
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
+                            </div>
+                            {/* social login */}
+                            <div className="form-control mt-6">
+                                <SocialLogin></SocialLogin>
                             </div>
                             <div className="form-control mt-6">
                                 <input type="submit" className="btn btn-primary" value="Sign Up" />

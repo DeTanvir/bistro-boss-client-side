@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
     // Dashboard Route(77-6: 02:30)
     {
     path: "dashboard",
-    element: <DashBoard></DashBoard>,
+  element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
     children: [
      {
       path: "mycart",// all path in routes file, must be without "/" = ["mycart"]

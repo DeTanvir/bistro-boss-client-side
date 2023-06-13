@@ -16,7 +16,7 @@ const useCart = () => {
         queryKey: ['carts', user?.email],//we want data from [hitting carts api] for [email]
         queryFn: async () => {
             // fetching the data by TanStack
-            const res = await fetch(`http://localhost:5000/carts?email=${user?.email}`)
+            const res = await fetch(`https://bistro-boss-server-ten-swart.vercel.app/carts?email=${user?.email}`)
             // return the [json-form] of fetched data
             return res.json()
           },

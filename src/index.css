@@ -2,8 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-.featured-item{
-    background-image: url('../src/assets/menu/banner.png');
+.featured-item {
+    background-image: url('../src/assets/home/featured.jpg');
     background-position: center;
     background-size: cover;
+}
+
+.login {
+    background-image: url('https://i.postimg.cc/ncNwVPj4/banner.png');
+    background-position: center;
+    background-size: cover;
+}
+
+/* dashboard drawer style */
+.drawer-side a.active {
+    color: white;
+}
+
+.drawer-side a {
+    background-color: transparent;
 }
