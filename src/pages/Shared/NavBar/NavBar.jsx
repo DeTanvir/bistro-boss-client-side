@@ -1,7 +1,7 @@
 import { useContext } from "react";
 // for sweet alert
 import Swal from 'sweetalert2'
-// react-icons
+// react-icons / font-awesome
 import { FaShoppingCart } from 'react-icons/fa';
 
 
@@ -39,7 +39,8 @@ const NavBar = () => {
         <li><Link to="/order/salad">Order Food</Link></li>
         <li><Link to="/secret">Secret</Link></li>
         <li>
-            <Link to="/">
+            {/* this li is linked to dashboard-mycart */}
+            <Link to="/dashboard/mycart">
                 <button className="btn">
                     <FaShoppingCart />
                     <div className="badge badge-secondary">+{cart?.length || 0}</div>

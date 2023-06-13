@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.featured-item{
+    background-image: url('../src/assets/menu/banner.png');
+    background-position: center;
+    background-size: cover;
+}
