@@ -31,7 +31,7 @@ const SocialLogin = () => {
                 const saveUser = {name: loggedInUser.displayName, email: loggedInUser.email};
 
                 // for posting [user] to DB
-                fetch('https://bistro-boss-server-ten-swart.vercel.app/users', {
+                fetch('http://localhost:5000/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

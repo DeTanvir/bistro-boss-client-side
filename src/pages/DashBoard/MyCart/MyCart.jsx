@@ -27,7 +27,7 @@ const MyCart = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 // [original operation] of delete [after-user-confirms]
-                fetch(`https://bistro-boss-server-ten-swart.vercel.app/carts/${item._id}`, {
+                fetch(`http://localhost:5000/carts/${item._id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

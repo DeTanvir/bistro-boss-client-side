@@ -39,7 +39,7 @@ const SignUp = () => {
                         const saveUser = {name: data.name, email: data.email};
 
                         // for posting [user] to DB
-                        fetch('https://bistro-boss-server-ten-swart.vercel.app/users', {
+                        fetch('http://localhost:5000/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
