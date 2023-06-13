@@ -1,26 +1,32 @@
 import { useContext } from "react";
 // for sweet alert
 import Swal from 'sweetalert2'
+// react-icons
+import { FaShoppingCart } from 'react-icons/fa';
+
 
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import useCart from "../../../hooks/useCart";
 
 const NavBar = () => {
 
     // import [user] from [AuthContext]
     const { user, logOut } = useContext(AuthContext);
+    // get data from hook useCart
+    const [cart] = useCart();
 
     // logOut function
     const handleLogOut = () => {
         logOut()
-            .then(() => { 
+            .then(() => {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
                     title: 'User Logged Out',
                     showConfirmButton: false,
                     timer: 1500
-                  })
+                })
             })
             .catch(error => console.log(error))
     }
@@ -31,14 +37,24 @@ const NavBar = () => {
 
         {/* by default the following link shows salad items */}
         <li><Link to="/order/salad">Order Food</Link></li>
+        <li><Link to="/secret">Secret</Link></li>
+        <li>
+            <Link to="/">
+                <button className="btn">
+                    <FaShoppingCart />
+                    <div className="badge badge-secondary">+{cart?.length || 0}</div>
+                </button>
+            </Link>
+        </li>
 
         {
             user ?
-                <><button onClick={handleLogOut} className="btn-ghost">Log Out</button></> :
+                <>
+                    {/* <span>{user?.displayName}</span> */}
+                    <button onClick={handleLogOut} className="btn-ghost">Log Out</button>
+                </> :
                 <> <li><Link to="/login">Login</Link></li> </>
         }
-        <li><Link to="/secret">Secret</Link></li>
-        <li><Link to="/signup">Sign Up</Link></li>
     </>
 
     return (

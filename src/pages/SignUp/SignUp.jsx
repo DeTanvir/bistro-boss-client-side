@@ -5,36 +5,53 @@ import { Helmet } from "react-helmet-async";
 import Swal from 'sweetalert2'
 
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const SignUp = () => {
 
     // importing create user from [AuthContext]
-    const {createUser} = useContext(AuthContext);
+    const { createUser, updateUserProfile } = useContext(AuthContext);
 
     // for react hook form
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    // for navigate to another route
+    const navigate = useNavigate();
 
     // form: on submit function
     // this [react-hook-form] automatically collects data from the [form]
     const onSubmit = data => {
         console.log(data);
+
+        // [signUp/createUser] function
         createUser(data.email, data.password)
-        .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            // for [sweet-alert] on login
-            Swal.fire({
-                title: 'User successfully logged in',
-                showClass: {
-                  popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                  popup: 'animate__animated animate__fadeOutUp'
-                }
-              })
-        })
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+
+                // [update-user-photo] function to update photo
+                updateUserProfile(data.name, data.photo)
+                    .then(() => {
+                        console.log('User Profile info updated');
+                    })
+                    .catch(err => console.log(err))
+
+                // to reset the form
+                reset();
+                // for [sweet-alert] on signUp
+                Swal.fire({
+                    title: 'User created successfully',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                })
+            })
+            // to navigate [home('/)] after signUp
+            navigate('/');
     }
 
     return (
@@ -57,6 +74,14 @@ const SignUp = () => {
                                 <input type="text" name="name" {...register("name", { required: true })} placeholder="name" className="input input-bordered" />
                                 {/* errors will return when field validation fails  */}
                                 {errors.name && <span className="text-red-600 font-semibold my-1">Name is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Photo URL</span>
+                                </label>
+                                <input type="text"  {...register("photo", { required: true })} placeholder="photo url" className="input input-bordered" />
+                                {/* errors will return when field validation fails  */}
+                                {errors.photo && <span className="text-red-600 font-semibold my-1">Photo URL is required</span>}
                             </div>
                             <div className="form-control">
                                 <label className="label">

@@ -11,6 +11,7 @@ import Secret from "../pages/Shared/Secret/Secret";
 
 export const router = createBrowserRouter([
   {
+    // Main Route
     path: "/",
     element: <Main></Main>,
     children: [
@@ -38,6 +39,9 @@ export const router = createBrowserRouter([
         path: 'secret',
         element: <PrivateRoute><Secret></Secret></PrivateRoute>
       },
-    ]
+    ],
+    // Dashboard Route(77-6: 02:30)
+    path: "dashboard",
+    element: 
   },
 ]);

@@ -28,9 +28,9 @@ const Login = () => {
     // to use [functions] from AuthContext
     const { signIn, googleSignIn } = useContext(AuthContext);
 
-    // for location
+    // // for location
     const location = useLocation();
-    // console.log(location);
+    // // console.log(location);
     //redirecting location
     const from = location.state?.from?.pathname || '/';
     // for navigate to another route
@@ -142,8 +142,10 @@ const Login = () => {
                                     <FaGoogle className="text-orange-900 me-2"></FaGoogle> Signin with Google
                                 </button>
                             </div>
+                            {/* TODO: make button disabled for captcha */}
                             <div className="form-control mt-6">
-                                <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
+                                {/* <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" /> */}
+                                <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </div>
                         <p className="text-center text-[#D1A054] my-2"><small>New to Bistro Boss? <Link to="/signup" className="font-bold">Create an account</Link></small></p>
