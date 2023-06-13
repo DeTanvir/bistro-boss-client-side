@@ -2,6 +2,8 @@
 import { Helmet } from "react-helmet-async";
 // imported css
 import './Login.css'
+// react-icons
+import { FaGoogle } from 'react-icons/fa';
 
 // for react simple captcha
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
@@ -24,7 +26,7 @@ const Login = () => {
 
 
     // to use [functions] from AuthContext
-    const { signIn } = useContext(AuthContext);
+    const { signIn, googleSignIn } = useContext(AuthContext);
 
     // for location
     const location = useLocation();
@@ -67,6 +69,20 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
             .catch(error => console.log(error))
+    }
+
+    // google signIn
+    const handleGoogleSignIn = () => {
+        googleSignIn()
+            .then(result => {
+                const loggedInUser = result.user;
+                console.log(loggedInUser);
+                // to navigate to the home route
+                navigate(from, { replace: true });
+            })
+            .catch(error => {
+                console.log('error', error.message)
+            })
     }
 
     // captcha validation operation
@@ -120,6 +136,11 @@ const Login = () => {
                                 <input type="text" onBlur={handleValidateCaptcha} name="captcha" placeholder="type the captcha above" className="input input-bordered" />
                                 {/* captcha validation button */}
                                 {/* <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button> */}
+                            </div>
+                            <div className="form-control mt-6">
+                                <button onClick={handleGoogleSignIn} className='w-full mb-2 btn btn-primary bg-orange-400'>
+                                    <FaGoogle className="text-orange-900 me-2"></FaGoogle> Signin with Google
+                                </button>
                             </div>
                             <div className="form-control mt-6">
                                 <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
