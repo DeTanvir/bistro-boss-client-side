@@ -1,13 +1,43 @@
+import { useContext } from "react";
+// for sweet alert
+import Swal from 'sweetalert2'
+
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const NavBar = () => {
+
+    // import [user] from [AuthContext]
+    const { user, logOut } = useContext(AuthContext);
+
+    // logOut function
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { 
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'User Logged Out',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+            })
+            .catch(error => console.log(error))
+    }
 
     const navOptions = <>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Our Menu</Link></li>
+
         {/* by default the following link shows salad items */}
         <li><Link to="/order/salad">Order Food</Link></li>
-        <li><Link to="/login">Login</Link></li>
+
+        {
+            user ?
+                <><button onClick={handleLogOut} className="btn-ghost">Log Out</button></> :
+                <> <li><Link to="/login">Login</Link></li> </>
+        }
+        <li><Link to="/secret">Secret</Link></li>
         <li><Link to="/signup">Sign Up</Link></li>
     </>
 
@@ -23,7 +53,7 @@ const NavBar = () => {
                             {navOptions}
                         </ul>
                     </div>
-                    <Link className="uppercase text-center ms-2" to='/'><span className="text-xl font-bold">Bistro Boss</span><br/>Restaurant</Link>
+                    <Link className="uppercase text-center ms-2" to='/'><span className="text-xl font-bold">Bistro Boss</span><br />Restaurant</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">

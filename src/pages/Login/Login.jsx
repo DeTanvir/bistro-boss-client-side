@@ -1,28 +1,39 @@
 // react helmet
 import { Helmet } from "react-helmet-async";
-// imported Images
-import loginBg from '../../assets/menu/banner.png'
+// imported css
+import './Login.css'
+
 // for react simple captcha
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 
 import { useEffect } from "react";
-import { useRef } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 const Login = () => {
 
     // hook for collecting captcha value
-    const captchaRef = useRef(null);
+    // const captchaRef = useRef(null);
+
     // for disabling the login button
     const [disabled, setDisabled] = useState(true);
 
 
     // to use [functions] from AuthContext
     const { signIn } = useContext(AuthContext);
+
+    // for location
+    const location = useLocation();
+    // console.log(location);
+    //redirecting location
+    const from = location.state?.from?.pathname || '/';
+    // for navigate to another route
+    const navigate = useNavigate();
+
 
     // for loading captcha
     useEffect(() => {
@@ -38,17 +49,30 @@ const Login = () => {
         console.log(email, password);
 
         // call the signIn function
-        signIn()
+        signIn(email, password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                // for [sweet-alert] on login
+                Swal.fire({
+                    title: 'User successfully logged in',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                })
+                // to navigate to the home route
+                navigate(from, { replace: true });
             })
+            .catch(error => console.log(error))
     }
 
     // captcha validation operation
-    const handleValidateCaptcha = () => {
+    const handleValidateCaptcha = (e) => {
         // to get captcha value
-        const user_captcha_value = captchaRef.current.value;
+        const user_captcha_value = e.target.value;
         // captcha validation condition & disabled button
         if (validateCaptcha(user_captcha_value)) {
             setDisabled(false);
@@ -64,7 +88,7 @@ const Login = () => {
                 <title>Bistro Boss | Login</title>
             </Helmet>
 
-            <div className="hero min-h-screen bg-base-200">
+            <div className="hero min-h-screen bg-base-200 login">
                 <div className="hero-content flex-col lg:flex-row">
                     <div className="text-center md:w-1/2 lg:text-left">
                         <h1 className="text-5xl font-bold">Login now!</h1>
@@ -93,9 +117,9 @@ const Login = () => {
                                     <LoadCanvasTemplate />
                                 </label>
                                 {/* custom hook for getting captcha value in the next line */}
-                                <input type="text" ref={captchaRef} name="captcha" placeholder="type the captcha above" className="input input-bordered" />
+                                <input type="text" onBlur={handleValidateCaptcha} name="captcha" placeholder="type the captcha above" className="input input-bordered" />
                                 {/* captcha validation button */}
-                                <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button>
+                                {/* <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs mt-2">Validate</button> */}
                             </div>
                             <div className="form-control mt-6">
                                 <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
