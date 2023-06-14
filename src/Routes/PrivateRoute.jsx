@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 // ES6 Modules or TypeScript
 import Swal from 'sweetalert2'
-import { AuthContext } from '../Providers/AuthProvider';
+import useAuth from '../hooks/useAuth';
 
 
 const PrivateRoute = ({ children }) => {
-    const { user, loading } = useContext(AuthContext);
+    const { user, loading } = useAuth();
 
     // to catch the location
     const location = useLocation();

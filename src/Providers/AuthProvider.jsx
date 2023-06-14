@@ -4,6 +4,8 @@ import { createContext } from "react";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 
 import { app } from "../firebase/firebase.config";
+// [axios-js]
+import axios from "axios";
 
 // creating a [context] to export to anyone
 export const AuthContext = createContext(null);
@@ -56,6 +58,22 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             console.log('current user', currentUser);
+
+            // only when an [user] exists, [jwt token req] would be sent, THEN THE ["TOKEN"] would be sent to [localStorage]
+            if (currentUser) {
+                // [axios] to fetch easily
+                axios.post('http://localhost:5000/jwt', { email: currentUser.email })
+                    .then(data => {
+                        console.log(data.data.token);
+                        // save [jwt token] to the localStorage
+                        localStorage.setItem('access-token', data.data.token);
+                    })
+            }
+            else{
+                // remove [jwt token] if the user loggedOut
+                localStorage.removeItem('access-token');
+            }
+
             setLoading(false);
         });
         return () => {

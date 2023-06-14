@@ -10,11 +10,10 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 
 import { useEffect } from "react";
 import { useState } from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
+import useAuth from "../../hooks/useAuth";
 
 
 const Login = () => {
@@ -27,7 +26,7 @@ const Login = () => {
 
 
     // to use [signIn-functions] from AuthContext
-    const { signIn, googleSignIn } = useContext(AuthContext);
+    const { signIn, googleSignIn } = useAuth();
 
     // // for location
     const location = useLocation();
@@ -141,7 +140,7 @@ const Login = () => {
 
                             {/* social login */}
                             <div className="form-control mt-6">
-                                <SocialLogin></SocialLogin>
+                                <SocialLogin task='Login'></SocialLogin>
                             </div>
 
 

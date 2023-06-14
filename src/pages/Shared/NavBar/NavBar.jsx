@@ -1,4 +1,3 @@
-import { useContext } from "react";
 // for sweet alert
 import Swal from 'sweetalert2'
 // react-icons / font-awesome
@@ -6,13 +5,13 @@ import { FaShoppingCart } from 'react-icons/fa';
 
 
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../../Providers/AuthProvider";
 import useCart from "../../../hooks/useCart";
+import useAuth from "../../../hooks/useAuth";
 
 const NavBar = () => {
 
     // import [user] from [AuthContext]
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut } = useAuth();
     // get data from hook useCart
     const [cart] = useCart();
 

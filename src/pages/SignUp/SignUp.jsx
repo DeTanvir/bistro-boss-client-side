@@ -1,4 +1,3 @@
-import { useContext } from "react";
 // for helmet
 import { Helmet } from "react-helmet-async";
 // for sweet alert
@@ -6,13 +5,13 @@ import Swal from 'sweetalert2'
 
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProvider";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
 
     // importing create user from [AuthContext]
-    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const { createUser, updateUserProfile } = useAuth();
 
     // for react hook form
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -140,7 +139,7 @@ const SignUp = () => {
                             </div>
                             {/* social login */}
                             <div className="form-control mt-6">
-                                <SocialLogin></SocialLogin>
+                                <SocialLogin task='Sign Up'></SocialLogin>
                             </div>
                             <div className="form-control mt-6">
                                 <input type="submit" className="btn btn-primary" value="Sign Up" />

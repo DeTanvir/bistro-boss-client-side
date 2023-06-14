@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { AuthContext } from "../../../Providers/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAuth from "../../../hooks/useAuth";
 
-const SocialLogin = () => {
+const SocialLogin = ({task}) => {
     // to use [functions] from AuthContext
-    const { googleSignIn } = useContext(AuthContext);
+    const { googleSignIn } = useAuth();
 
     // // for location
     const location = useLocation();
@@ -65,9 +64,9 @@ const SocialLogin = () => {
         <div>
             <div className="divider"></div>
             <div>
-                <button onClick={handleGoogleSignIn} className='w-full mb-2 btn btn-primary bg-orange-400'>
-                    <FaGoogle className="text-orange-900 me-2"></FaGoogle> Signin with Google
-                </button>
+                <button onClick={handleGoogleSignIn} className='w-full mb-2 btn btn-warning bg-amber-400'>
+                    <FaGoogle className="text-[#EA4335] me-2"></FaGoogle> <span className="text-white">{task} with Google
+                </span></button>
             </div>
         </div>
     );

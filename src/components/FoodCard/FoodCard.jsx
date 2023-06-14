@@ -1,13 +1,12 @@
-import { useContext } from "react";
-import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import useCart from "../../hooks/useCart";
+import useAuth from "../../hooks/useAuth";
 
 const FoodCard = ({ item }) => {
     const { name, recipe, image, price, _id } = item;
     // contextApi for user
-    const { user } = useContext(AuthContext);
+    const { user } = useAuth();
     // import [refetch] from useCart, to start the [useCart] function after every food-item added
     const [,refetch] = useCart();
 
