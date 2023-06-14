@@ -16,6 +16,11 @@ const useAdmin = () => {
         // this [queryFn] is used with [axiosSecureApi]
         // no [headers] and [base-url] is needed
         queryFn: async () => {
+            
+            // [MOST IMPORTANT]: If we don't do it, a user can't browse site without login
+            if (!user) {
+                return false;
+            }
             // fetching the data by TanStack
             const res = await axiosSecure(`/users/admin/${user?.email}`)
             console.log('res from axios for isAdmin', res);

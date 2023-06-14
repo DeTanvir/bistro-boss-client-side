@@ -137,7 +137,7 @@ const SignUp = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
-                            {/* social login */}
+                            {/* social signUp */}
                             <div className="form-control mt-6">
                                 <SocialLogin task='Sign Up'></SocialLogin>
                             </div>

@@ -67,14 +67,16 @@ const AuthProvider = ({ children }) => {
                         console.log(data.data.token);
                         // save [jwt token] to the localStorage
                         localStorage.setItem('access-token', data.data.token);
+                        // setLoading will be false after [jwt] token comes
+                        setLoading(false);
                     })
             }
             else{
                 // remove [jwt token] if the user loggedOut
                 localStorage.removeItem('access-token');
             }
-
-            setLoading(false);
+            // if setLoading stay here, there will be error after generating [jwt-token]
+            // setLoading(false);
         });
         return () => {
             // by returning unsubscribe this useEffect stops
